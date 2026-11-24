@@ -32,21 +32,18 @@ public class TokenBucketAlgorithm implements RateLimitAlgorithm {
 
         synchronized (entry) {
 
-            if (entry.lastWithdrawnAt == 0) {
-                entry.tokens = tokenBucketRule.getMaxTokens() - 1;
-                entry.lastWithdrawnAt = now;
+            if (entry.isNew()) {
+                entry.update(tokenBucketRule.getMaxTokens() - 1, now);
                 return true;
             }
 
-            long refilled = (now - entry.lastWithdrawnAt) * tokenBucketRule.getRefillRate() / 1000;
-            int available = (int) Math.min(tokenBucketRule.getMaxTokens(), entry.tokens + refilled);
+            int available = entry.availableTokens(tokenBucketRule.getMaxTokens(), tokenBucketRule.getRefillRate(), now);
 
             if (available < 1) {
                 return false;
             }
 
-            entry.tokens = available - 1;
-            entry.lastWithdrawnAt = now;
+            entry.update(available - 1, now);
             return true;
         }
     }
@@ -75,7 +72,7 @@ public class TokenBucketAlgorithm implements RateLimitAlgorithm {
 
     // a full bucket is the same as a new one, so evicting it changes nothing
     private boolean isFullyRefilled(ConfigManager configManager, String key, TokenBucketEntry entry, long now) {
-        if (entry.lastWithdrawnAt == 0) {
+        if (entry.isNew()) {
             return false;
         }
 
@@ -84,7 +81,6 @@ public class TokenBucketAlgorithm implements RateLimitAlgorithm {
             return true;
         }
 
-        long refilled = (now - entry.lastWithdrawnAt) * rule.getRefillRate() / 1000;
-        return entry.tokens + refilled >= rule.getMaxTokens();
+        return entry.availableTokens(rule.getMaxTokens(), rule.getRefillRate(), now) >= rule.getMaxTokens();
     }
 }

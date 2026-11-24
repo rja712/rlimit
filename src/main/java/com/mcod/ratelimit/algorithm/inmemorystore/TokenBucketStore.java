@@ -8,6 +8,20 @@ public class TokenBucketStore {
     public static final class TokenBucketEntry {
         private int tokens;
         private long lastWithdrawnAt;
+
+        public boolean isNew() {
+            return lastWithdrawnAt == 0;
+        }
+
+        public int availableTokens(int maxTokens, int refillRate, long now) {
+            long refilled = (now - lastWithdrawnAt) * refillRate / 1000;
+            return (int) Math.min(maxTokens, tokens + refilled);
+        }
+
+        public void update(int tokens, long now) {
+            this.tokens = tokens;
+            this.lastWithdrawnAt = now;
+        }
     }
 
     private static final TokenBucketStore INSTANCE = new TokenBucketStore();

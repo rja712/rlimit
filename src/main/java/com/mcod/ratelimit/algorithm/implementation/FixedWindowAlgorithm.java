@@ -35,18 +35,16 @@ public class FixedWindowAlgorithm implements RateLimitAlgorithm {
         FixedWindowEntry entry = store.getOrCreate(key);
 
         synchronized (entry) {
-            if (entry.lastAccessedAt < windowStart) {
-                entry.count = 1;
-                entry.lastAccessedAt = now;
+            if (entry.isStale(windowStart)) {
+                entry.startWindow(now);
                 return true;
             }
 
-            if (entry.count >= fixedWindowRule.getRequestsPerSecond()) {
+            if (entry.isLimitReached(fixedWindowRule.getRequestsPerSecond())) {
                 return false;
             }
 
-            entry.count++;
-            entry.lastAccessedAt = now;
+            entry.increment(now);
             return true;
         }
     }
@@ -60,13 +58,13 @@ public class FixedWindowAlgorithm implements RateLimitAlgorithm {
             FixedWindowEntry entry = mapEntry.getValue();
 
             // quick check without the lock
-            if (entry.lastAccessedAt >= windowStart) {
+            if (!entry.isStale(windowStart)) {
                 continue;
             }
 
             synchronized (entry) {
                 // check again, the entry may have been used while waiting for the lock
-                if (entry.lastAccessedAt < windowStart) {
+                if (entry.isStale(windowStart)) {
                     store.getEntries().remove(mapEntry.getKey(), entry);
                 }
             }
