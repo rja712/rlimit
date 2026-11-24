@@ -10,4 +10,10 @@ public class DbConfigManager implements ConfigManager {
         // TODO: read rule from a database.
         throw new UnsupportedOperationException("DB config not implemented");
     }
+
+    @Override
+    public long getCleaningIntervalSeconds() {
+        // TODO: read cleaning interval from a database.
+        throw new UnsupportedOperationException("DB config not implemented");
+    }
 }

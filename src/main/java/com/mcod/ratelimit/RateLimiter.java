@@ -2,6 +2,7 @@ package com.mcod.ratelimit;
 
 import com.mcod.ratelimit.algorithm.RateLimitAlgorithm;
 import com.mcod.ratelimit.algorithm.RateLimitAlgorithmFactory;
+import com.mcod.ratelimit.cleaner.CleanerScheduler;
 import com.mcod.ratelimit.config.ConfigManager;
 import com.mcod.ratelimit.config.ConfigManagerFactory;
 import com.mcod.ratelimit.config.ConfigProviderType;
@@ -19,14 +20,16 @@ public final class RateLimiter {
 
     public static synchronized RateLimiter initialize(ConfigProviderType providerType) {
         if (instance == null) {
-            instance = new RateLimiter(ConfigManagerFactory.create(providerType));
+            ConfigManager configManager = ConfigManagerFactory.create(providerType);
+            instance = new RateLimiter(configManager);
+            CleanerScheduler.getInstance().start(configManager.getCleaningIntervalSeconds(), configManager);
         }
         return instance;
     }
 
     public boolean isAllowed(String clientId, String apiName) {
         Rule rule = configManager.getRule(apiName);
-        RateLimitAlgorithm algorithm = RateLimitAlgorithmFactory.create(rule.getAlgorithmType());
+        RateLimitAlgorithm algorithm = RateLimitAlgorithmFactory.get(rule.getAlgorithmType());
         return algorithm.isAllowed(clientId + ":" + apiName, rule);
     }
 }

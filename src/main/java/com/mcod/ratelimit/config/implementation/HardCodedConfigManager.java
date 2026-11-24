@@ -16,11 +16,16 @@ public class HardCodedConfigManager implements ConfigManager {
     private static Configuration buildConfiguration() {
         Rule defaultRule = new FixedWindowRule(10, FallbackPolicy.FAIL_OPEN);
         Map<String, Rule> apiRules = Map.of("createOrder", new TokenBucketRule(100, 10, FallbackPolicy.FAIL_CLOSE));
-        return new Configuration(defaultRule, apiRules);
+        return new Configuration(defaultRule, apiRules, 60);
     }
 
     @Override
     public Rule getRule(String apiName) {
         return configuration.getRule(apiName);
+    }
+
+    @Override
+    public long getCleaningIntervalSeconds() {
+        return configuration.getCleaningIntervalSeconds();
     }
 }

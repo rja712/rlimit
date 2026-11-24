@@ -10,4 +10,10 @@ public class YamlConfigManager implements ConfigManager {
         // TODO: read rule from a YAML file.
         throw new UnsupportedOperationException("YAML config not implemented");
     }
+
+    @Override
+    public long getCleaningIntervalSeconds() {
+        // TODO: read cleaning interval from a YAML file.
+        throw new UnsupportedOperationException("YAML config not implemented");
+    }
 }

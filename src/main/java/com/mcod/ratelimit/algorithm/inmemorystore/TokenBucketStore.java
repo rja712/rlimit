@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TokenBucketStore {
 
     public static final class TokenBucketEntry {
-        public int tokens;
-        public long lastWithdrawnAt;
+        private int tokens;
+        private long lastWithdrawnAt;
     }
 
     private static final TokenBucketStore INSTANCE = new TokenBucketStore();
@@ -24,5 +24,9 @@ public class TokenBucketStore {
 
     public TokenBucketEntry getOrCreate(String key) {
         return entries.computeIfAbsent(key, k -> new TokenBucketEntry());
+    }
+
+    public Map<String, TokenBucketEntry> getEntries() {
+        return entries;
     }
 }

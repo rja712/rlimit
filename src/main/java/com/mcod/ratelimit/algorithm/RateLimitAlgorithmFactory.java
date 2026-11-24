@@ -8,10 +8,10 @@ public final class RateLimitAlgorithmFactory {
     private RateLimitAlgorithmFactory() {
     }
 
-    public static RateLimitAlgorithm create(AlgorithmProviderType type) {
+    public static RateLimitAlgorithm get(AlgorithmProviderType type) {
         return switch (type) {
-            case FIXED_WINDOW -> new FixedWindowAlgorithm();
-            case TOKEN_BUCKET -> new TokenBucketAlgorithm();
+            case FIXED_WINDOW -> FixedWindowAlgorithm.getInstance();
+            case TOKEN_BUCKET -> TokenBucketAlgorithm.getInstance();
         };
     }
 }

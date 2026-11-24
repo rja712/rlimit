@@ -6,8 +6,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FixedWindowStore {
 
     public static final class FixedWindowEntry {
-        public int count;
-        public long lastAccessedAt;
+        private int count;
+        private long lastAccessedAt;
     }
 
     private static final FixedWindowStore INSTANCE = new FixedWindowStore();
@@ -24,5 +24,9 @@ public class FixedWindowStore {
 
     public FixedWindowEntry getOrCreate(String key) {
         return entries.computeIfAbsent(key, k -> new FixedWindowEntry());
+    }
+
+    public Map<String, FixedWindowEntry> getEntries() {
+        return entries;
     }
 }
