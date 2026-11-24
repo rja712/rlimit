@@ -1,7 +1,8 @@
 package com.mcod.ratelimit.model.config;
 
-import java.util.Map;
 import lombok.Value;
+
+import java.util.Map;
 
 @Value
 public class Configuration {

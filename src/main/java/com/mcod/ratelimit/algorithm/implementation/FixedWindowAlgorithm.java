@@ -5,7 +5,7 @@ import com.mcod.ratelimit.model.config.Rule;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-class FixedWindowAlgorithm implements RateLimitAlgorithm {
+public class FixedWindowAlgorithm implements RateLimitAlgorithm {
 
 
     @Override
