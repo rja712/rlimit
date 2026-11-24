@@ -1,4 +1,4 @@
-package com.mcod.ratelimit.inmemorystore;
+package com.mcod.ratelimit.algorithm.inmemorystore;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
