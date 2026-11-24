@@ -1,5 +1,7 @@
 package com.mcod.ratelimit.model.config;
 
+import com.mcod.ratelimit.algorithm.AlgorithmProviderType;
+
 public final class FixedWindowRule implements Rule {
 
     private final int requestsPerSecond;
@@ -12,6 +14,11 @@ public final class FixedWindowRule implements Rule {
 
     public int getRequestsPerSecond() {
         return requestsPerSecond;
+    }
+
+    @Override
+    public AlgorithmProviderType getAlgorithmType() {
+        return AlgorithmProviderType.FIXED_WINDOW;
     }
 
     @Override

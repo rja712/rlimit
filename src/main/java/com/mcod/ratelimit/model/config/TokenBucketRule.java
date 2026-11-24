@@ -1,5 +1,7 @@
 package com.mcod.ratelimit.model.config;
 
+import com.mcod.ratelimit.algorithm.AlgorithmProviderType;
+
 public final class TokenBucketRule implements Rule {
 
     private final int maxTokens;
@@ -18,6 +20,11 @@ public final class TokenBucketRule implements Rule {
 
     public int getRefillRate() {
         return refillRate;
+    }
+
+    @Override
+    public AlgorithmProviderType getAlgorithmType() {
+        return AlgorithmProviderType.TOKEN_BUCKET;
     }
 
     @Override

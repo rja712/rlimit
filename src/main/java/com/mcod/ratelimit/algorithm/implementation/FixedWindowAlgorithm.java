@@ -7,6 +7,7 @@ public class FixedWindowAlgorithm implements RateLimitAlgorithm {
 
     @Override
     public boolean tryAcquire(String key, Rule rule) {
+        // TODO: fixed window logic using FixedWindowStore
         return false;
     }
 }

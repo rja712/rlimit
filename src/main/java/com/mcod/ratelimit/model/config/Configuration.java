@@ -12,14 +12,6 @@ public final class Configuration {
         this.rules = Map.copyOf(rules);
     }
 
-    public Rule getDefaultRule() {
-        return defaultRule;
-    }
-
-    public Map<String, Rule> getRules() {
-        return rules;
-    }
-
     public Rule getRule(String apiName) {
         return rules.getOrDefault(apiName, defaultRule);
     }

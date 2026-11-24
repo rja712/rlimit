@@ -8,7 +8,7 @@ public class TokenBucketAlgorithm implements RateLimitAlgorithm {
 
     @Override
     public boolean tryAcquire(String key, Rule rule) {
+        // TODO: token bucket logic using TokenBucketStore
         return true;
-
     }
 }
