@@ -5,6 +5,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class TokenBucketStore {
 
+    public static final class TokenBucketEntry {
+        public int tokens;
+        public long lastWithdrawnAt;
+    }
+
     private static final TokenBucketStore INSTANCE = new TokenBucketStore();
 
     private TokenBucketStore() {
@@ -14,24 +19,10 @@ public class TokenBucketStore {
         return INSTANCE;
     }
 
+    // key: clientId + apiName
     private final Map<String, TokenBucketEntry> entries = new ConcurrentHashMap<>();
 
-    public static final class TokenBucketEntry {
-
-        private final int tokens;
-        private final long lastWithdrawnAt;
-
-        public TokenBucketEntry(int tokens, long lastWithdrawnAt) {
-            this.tokens = tokens;
-            this.lastWithdrawnAt = lastWithdrawnAt;
-        }
-
-        public int getTokens() {
-            return tokens;
-        }
-
-        public long getLastWithdrawnAt() {
-            return lastWithdrawnAt;
-        }
+    public TokenBucketEntry getOrCreate(String key) {
+        return entries.computeIfAbsent(key, k -> new TokenBucketEntry());
     }
 }

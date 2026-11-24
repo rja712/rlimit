@@ -1,11 +1,11 @@
 package com.mcod.ratelimit.config.implementation;
 
 import com.mcod.ratelimit.config.ConfigManager;
-import com.mcod.ratelimit.model.config.Configuration;
-import com.mcod.ratelimit.model.config.FallbackPolicy;
-import com.mcod.ratelimit.model.config.FixedWindowRule;
-import com.mcod.ratelimit.model.config.Rule;
-import com.mcod.ratelimit.model.config.TokenBucketRule;
+import com.mcod.ratelimit.config.model.Configuration;
+import com.mcod.ratelimit.config.model.FallbackPolicy;
+import com.mcod.ratelimit.config.model.FixedWindowRule;
+import com.mcod.ratelimit.config.model.Rule;
+import com.mcod.ratelimit.config.model.TokenBucketRule;
 
 import java.util.Map;
 

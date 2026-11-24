@@ -1,7 +1,9 @@
 package com.mcod.ratelimit.algorithm;
 
-import com.mcod.ratelimit.model.config.Rule;
+import com.mcod.ratelimit.config.model.Rule;
 
 public interface RateLimitAlgorithm {
-    boolean tryAcquire(String key, Rule rule);
+
+    boolean isAllowed(String key, Rule rule);
+
 }

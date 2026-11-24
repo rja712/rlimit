@@ -5,6 +5,11 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class FixedWindowStore {
 
+    public static final class FixedWindowEntry {
+        public int count;
+        public long lastAccessedAt;
+    }
+
     private static final FixedWindowStore INSTANCE = new FixedWindowStore();
 
     private FixedWindowStore() {
@@ -14,24 +19,10 @@ public class FixedWindowStore {
         return INSTANCE;
     }
 
+    // key: clientId + apiName
     private final Map<String, FixedWindowEntry> entries = new ConcurrentHashMap<>();
 
-    public static final class FixedWindowEntry {
-
-        private final int count;
-        private final long lastAccessedAt;
-
-        public FixedWindowEntry(int count, long lastAccessedAt) {
-            this.count = count;
-            this.lastAccessedAt = lastAccessedAt;
-        }
-
-        public int getCount() {
-            return count;
-        }
-
-        public long getLastAccessedAt() {
-            return lastAccessedAt;
-        }
+    public FixedWindowEntry getOrCreate(String key) {
+        return entries.computeIfAbsent(key, k -> new FixedWindowEntry());
     }
 }

@@ -5,7 +5,7 @@ import com.mcod.ratelimit.algorithm.RateLimitAlgorithmFactory;
 import com.mcod.ratelimit.config.ConfigManager;
 import com.mcod.ratelimit.config.ConfigManagerFactory;
 import com.mcod.ratelimit.config.ConfigProviderType;
-import com.mcod.ratelimit.model.config.Rule;
+import com.mcod.ratelimit.config.model.Rule;
 
 public final class RateLimiter {
 
@@ -27,6 +27,6 @@ public final class RateLimiter {
     public boolean isAllowed(String clientId, String apiName) {
         Rule rule = configManager.getRule(apiName);
         RateLimitAlgorithm algorithm = RateLimitAlgorithmFactory.create(rule.getAlgorithmType());
-        return algorithm.tryAcquire(clientId + "," + apiName, rule);
+        return algorithm.isAllowed(clientId + ":" + apiName, rule);
     }
 }

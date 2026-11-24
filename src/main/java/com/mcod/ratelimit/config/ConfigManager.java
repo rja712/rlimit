@@ -1,6 +1,6 @@
 package com.mcod.ratelimit.config;
 
-import com.mcod.ratelimit.model.config.Rule;
+import com.mcod.ratelimit.config.model.Rule;
 
 public interface ConfigManager {
 

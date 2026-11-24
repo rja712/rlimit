@@ -1,7 +1,7 @@
 package com.mcod.ratelimit.config.implementation;
 
 import com.mcod.ratelimit.config.ConfigManager;
-import com.mcod.ratelimit.model.config.Rule;
+import com.mcod.ratelimit.config.model.Rule;
 
 public class DbConfigManager implements ConfigManager {
 

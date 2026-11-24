@@ -1,4 +1,4 @@
-package com.mcod.ratelimit.model.config;
+package com.mcod.ratelimit.config.model;
 
 import com.mcod.ratelimit.algorithm.AlgorithmProviderType;
 
