@@ -1,14 +1,24 @@
 package com.mcod.ratelimit.model.config;
 
-import lombok.Value;
-
 import java.util.Map;
 
-@Value
-public class Configuration {
+public final class Configuration {
 
-    Rule defaultRule;
-    Map<String, Rule> rules;
+    private final Rule defaultRule;
+    private final Map<String, Rule> rules;
+
+    public Configuration(Rule defaultRule, Map<String, Rule> rules) {
+        this.defaultRule = defaultRule;
+        this.rules = Map.copyOf(rules);
+    }
+
+    public Rule getDefaultRule() {
+        return defaultRule;
+    }
+
+    public Map<String, Rule> getRules() {
+        return rules;
+    }
 
     public Rule getRule(String apiName) {
         return rules.getOrDefault(apiName, defaultRule);

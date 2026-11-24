@@ -1,9 +1,21 @@
 package com.mcod.ratelimit.model.config;
 
-import lombok.Value;
+public final class FixedWindowRule implements Rule {
 
-@Value
-public class FixedWindowRule implements Rule {
-    int requestsPerSecond;
-    FallbackPolicy fallbackPolicy;
+    private final int requestsPerSecond;
+    private final FallbackPolicy fallbackPolicy;
+
+    public FixedWindowRule(int requestsPerSecond, FallbackPolicy fallbackPolicy) {
+        this.requestsPerSecond = requestsPerSecond;
+        this.fallbackPolicy = fallbackPolicy;
+    }
+
+    public int getRequestsPerSecond() {
+        return requestsPerSecond;
+    }
+
+    @Override
+    public FallbackPolicy getFallbackPolicy() {
+        return fallbackPolicy;
+    }
 }
