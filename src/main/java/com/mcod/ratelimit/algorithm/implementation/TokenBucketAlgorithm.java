@@ -31,7 +31,6 @@ public class TokenBucketAlgorithm implements RateLimitAlgorithm {
         TokenBucketEntry entry = store.getOrCreate(key);
 
         synchronized (entry) {
-
             if (entry.isNew()) {
                 entry.update(tokenBucketRule.getMaxTokens() - 1, now);
                 return true;

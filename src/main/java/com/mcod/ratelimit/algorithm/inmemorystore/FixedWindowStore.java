@@ -47,4 +47,13 @@ public class FixedWindowStore {
     public Map<String, FixedWindowEntry> getEntries() {
         return entries;
     }
+
+    // takes each entry lock once, so work already running on that entry finishes first
+    public void lockEntries() {
+        for (FixedWindowEntry entry : entries.values()) {
+            synchronized (entry) {
+                continue;
+            }
+        }
+    }
 }

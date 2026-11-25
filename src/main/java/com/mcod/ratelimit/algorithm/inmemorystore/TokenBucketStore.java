@@ -43,4 +43,13 @@ public class TokenBucketStore {
     public Map<String, TokenBucketEntry> getEntries() {
         return entries;
     }
+
+    // takes each entry lock once, so work already running on that entry finishes first
+    public void lockEntries() {
+        for (TokenBucketEntry entry : entries.values()) {
+            synchronized (entry) {
+                continue;
+            }
+        }
+    }
 }
